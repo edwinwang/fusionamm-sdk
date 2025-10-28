@@ -1,5 +1,13 @@
 # @crypticdot/fusionamm-rust-client
 
+## 1.0.66
+
+## 1.0.65
+
+## 1.0.64
+
+## 1.0.63
+
 ## 1.0.62
 
 ### Patch Changes
