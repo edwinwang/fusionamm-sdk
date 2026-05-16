@@ -11,5 +11,5 @@
 mod fusion_pool;
 mod limit_order;
 mod position;
-mod tick_array;
+mod sparse_tick_array;
 mod tick_range;
