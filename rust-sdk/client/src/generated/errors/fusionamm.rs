@@ -88,9 +88,9 @@ pub enum FusionammError {
     /// 6025 - Position is not empty, range can't be set.
     #[error("Position is not empty, range can't be set.")]
     SetRangeForNonEmptyPosition = 0x1789,
-    /// 6026 - Exceeded reward ratio of concentrated liquidity providers to limit orders' liquidity providers
-    #[error("Exceeded reward ratio of concentrated liquidity providers to limit orders' liquidity providers")]
-    ClpRewardRateMaxExceeded = 0x178A,
+    /// 6026 - Unused
+    #[error("Unused")]
+    Unused = 0x178A,
     /// 6027 - Reward vault requires amount to support emissions for at least one day
     #[error("Reward vault requires amount to support emissions for at least one day")]
     RewardVaultAmountInsufficient = 0x178B,
@@ -199,9 +199,18 @@ pub enum FusionammError {
     /// 6062 - Zero amount
     #[error("Zero amount")]
     ZeroAmount = 0x17AE,
-    /// 6063 - Can't reset the price because a pool is not empty
-    #[error("Can't reset the price because a pool is not empty")]
+    /// 6063 - Can't reset the price because the pool is not empty
+    #[error("Can't reset the price because the pool is not empty")]
     ResetPriceForNonEmptyPool = 0x17AF,
+    /// 6064 - Position locked
+    #[error("Position locked")]
+    PositionLocked = 0x17B0,
+    /// 6065 - Position is not lockable
+    #[error("Position is not lockable")]
+    PositionNotLockable = 0x17B1,
+    /// 6066 - Rent calculation error
+    #[error("Rent calculation error")]
+    RentCalculationError = 0x17B2,
 }
 
 impl From<FusionammError> for solana_program_error::ProgramError {

@@ -22,8 +22,8 @@ pub collect_protocol_fees_authority: Pubkey,
 #[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
 pub token_badge_authority: Pubkey,
 pub default_protocol_fee_rate: u16,
-pub default_order_protocol_fee_rate: u16,
-pub default_clp_reward_rate: u16,
+pub unused0: u16,
+pub unused1: u16,
 #[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::Bytes>"))]
 pub reserved: [u8; 170],
 }
@@ -54,7 +54,7 @@ impl<'a> TryFrom<&solana_account_info::AccountInfo<'a>> for FusionPoolsConfig {
 
 #[cfg(feature = "fetch")]
 pub fn fetch_fusion_pools_config(
-  rpc: &solana_rpc_client::rpc_client::RpcClient,
+  rpc: &solana_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
 ) -> Result<crate::shared::DecodedAccount<FusionPoolsConfig>, std::io::Error> {
   let accounts = fetch_all_fusion_pools_config(rpc, &[*address])?;
@@ -63,7 +63,7 @@ pub fn fetch_fusion_pools_config(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_fusion_pools_config(
-  rpc: &solana_rpc_client::rpc_client::RpcClient,
+  rpc: &solana_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
 ) -> Result<Vec<crate::shared::DecodedAccount<FusionPoolsConfig>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)
@@ -81,7 +81,7 @@ pub fn fetch_all_fusion_pools_config(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_maybe_fusion_pools_config(
-  rpc: &solana_rpc_client::rpc_client::RpcClient,
+  rpc: &solana_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
 ) -> Result<crate::shared::MaybeAccount<FusionPoolsConfig>, std::io::Error> {
     let accounts = fetch_all_maybe_fusion_pools_config(rpc, &[*address])?;
@@ -90,7 +90,7 @@ pub fn fetch_maybe_fusion_pools_config(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_maybe_fusion_pools_config(
-  rpc: &solana_rpc_client::rpc_client::RpcClient,
+  rpc: &solana_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
 ) -> Result<Vec<crate::shared::MaybeAccount<FusionPoolsConfig>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)

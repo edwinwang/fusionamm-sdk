@@ -5,19 +5,23 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
+  pub(crate) mod r#fixed_tick_array;
   pub(crate) mod r#fusion_pool;
   pub(crate) mod r#fusion_pools_config;
   pub(crate) mod r#limit_order;
   pub(crate) mod r#position;
   pub(crate) mod r#position_bundle;
-  pub(crate) mod r#tick_array;
+  pub(crate) mod r#position_lock;
+  pub(crate) mod r#sparse_tick_array;
   pub(crate) mod r#token_badge;
 
+  pub use self::r#fixed_tick_array::*;
   pub use self::r#fusion_pool::*;
   pub use self::r#fusion_pools_config::*;
   pub use self::r#limit_order::*;
   pub use self::r#position::*;
   pub use self::r#position_bundle::*;
-  pub use self::r#tick_array::*;
+  pub use self::r#position_lock::*;
+  pub use self::r#sparse_tick_array::*;
   pub use self::r#token_badge::*;
 

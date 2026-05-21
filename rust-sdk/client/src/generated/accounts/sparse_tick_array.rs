@@ -5,28 +5,27 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use crate::generated::types::Tick;
 use solana_pubkey::Pubkey;
+use crate::generated::types::MaybeTick;
 use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
 
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct TickArray {
+pub struct SparseTickArray {
 pub discriminator: [u8; 8],
 pub start_tick_index: i32,
-#[cfg_attr(feature = "serde", serde(with = "serde_big_array::BigArray"))]
-pub ticks: [Tick; 88],
 #[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
 pub fusion_pool: Pubkey,
+#[cfg_attr(feature = "serde", serde(with = "serde_big_array::BigArray"))]
+pub ticks: [MaybeTick; 88],
 }
 
 
-pub const TICK_ARRAY_DISCRIMINATOR: [u8; 8] = [69, 97, 189, 190, 110, 7, 66, 187];
+pub const SPARSE_TICK_ARRAY_DISCRIMINATOR: [u8; 8] = [85, 1, 199, 2, 188, 97, 101, 139];
 
-impl TickArray {
-      pub const LEN: usize = 9988;
+impl SparseTickArray {
   
   
   
@@ -37,7 +36,7 @@ impl TickArray {
   }
 }
 
-impl<'a> TryFrom<&solana_account_info::AccountInfo<'a>> for TickArray {
+impl<'a> TryFrom<&solana_account_info::AccountInfo<'a>> for SparseTickArray {
   type Error = std::io::Error;
 
   fn try_from(account_info: &solana_account_info::AccountInfo<'a>) -> Result<Self, Self::Error> {
@@ -47,53 +46,53 @@ impl<'a> TryFrom<&solana_account_info::AccountInfo<'a>> for TickArray {
 }
 
 #[cfg(feature = "fetch")]
-pub fn fetch_tick_array(
-  rpc: &solana_rpc_client::rpc_client::RpcClient,
+pub fn fetch_sparse_tick_array(
+  rpc: &solana_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
-) -> Result<crate::shared::DecodedAccount<TickArray>, std::io::Error> {
-  let accounts = fetch_all_tick_array(rpc, &[*address])?;
+) -> Result<crate::shared::DecodedAccount<SparseTickArray>, std::io::Error> {
+  let accounts = fetch_all_sparse_tick_array(rpc, &[*address])?;
   Ok(accounts[0].clone())
 }
 
 #[cfg(feature = "fetch")]
-pub fn fetch_all_tick_array(
-  rpc: &solana_rpc_client::rpc_client::RpcClient,
+pub fn fetch_all_sparse_tick_array(
+  rpc: &solana_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
-) -> Result<Vec<crate::shared::DecodedAccount<TickArray>>, std::io::Error> {
+) -> Result<Vec<crate::shared::DecodedAccount<SparseTickArray>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)
       .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e.to_string()))?;
-    let mut decoded_accounts: Vec<crate::shared::DecodedAccount<TickArray>> = Vec::new();
+    let mut decoded_accounts: Vec<crate::shared::DecodedAccount<SparseTickArray>> = Vec::new();
     for i in 0..addresses.len() {
       let address = addresses[i];
       let account = accounts[i].as_ref()
         .ok_or(std::io::Error::new(std::io::ErrorKind::Other, format!("Account not found: {}", address)))?;
-      let data = TickArray::from_bytes(&account.data)?;
+      let data = SparseTickArray::from_bytes(&account.data)?;
       decoded_accounts.push(crate::shared::DecodedAccount { address, account: account.clone(), data });
     }
     Ok(decoded_accounts)
 }
 
 #[cfg(feature = "fetch")]
-pub fn fetch_maybe_tick_array(
-  rpc: &solana_rpc_client::rpc_client::RpcClient,
+pub fn fetch_maybe_sparse_tick_array(
+  rpc: &solana_client::rpc_client::RpcClient,
   address: &solana_pubkey::Pubkey,
-) -> Result<crate::shared::MaybeAccount<TickArray>, std::io::Error> {
-    let accounts = fetch_all_maybe_tick_array(rpc, &[*address])?;
+) -> Result<crate::shared::MaybeAccount<SparseTickArray>, std::io::Error> {
+    let accounts = fetch_all_maybe_sparse_tick_array(rpc, &[*address])?;
     Ok(accounts[0].clone())
 }
 
 #[cfg(feature = "fetch")]
-pub fn fetch_all_maybe_tick_array(
-  rpc: &solana_rpc_client::rpc_client::RpcClient,
+pub fn fetch_all_maybe_sparse_tick_array(
+  rpc: &solana_client::rpc_client::RpcClient,
   addresses: &[solana_pubkey::Pubkey],
-) -> Result<Vec<crate::shared::MaybeAccount<TickArray>>, std::io::Error> {
+) -> Result<Vec<crate::shared::MaybeAccount<SparseTickArray>>, std::io::Error> {
     let accounts = rpc.get_multiple_accounts(addresses)
       .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e.to_string()))?;
-    let mut decoded_accounts: Vec<crate::shared::MaybeAccount<TickArray>> = Vec::new();
+    let mut decoded_accounts: Vec<crate::shared::MaybeAccount<SparseTickArray>> = Vec::new();
     for i in 0..addresses.len() {
       let address = addresses[i];
       if let Some(account) = accounts[i].as_ref() {
-        let data = TickArray::from_bytes(&account.data)?;
+        let data = SparseTickArray::from_bytes(&account.data)?;
         decoded_accounts.push(crate::shared::MaybeAccount::Exists(crate::shared::DecodedAccount { address, account: account.clone(), data }));
       } else {
         decoded_accounts.push(crate::shared::MaybeAccount::NotFound(address));
@@ -103,28 +102,28 @@ pub fn fetch_all_maybe_tick_array(
 }
 
   #[cfg(feature = "anchor")]
-  impl anchor_lang::AccountDeserialize for TickArray {
+  impl anchor_lang::AccountDeserialize for SparseTickArray {
       fn try_deserialize_unchecked(buf: &mut &[u8]) -> anchor_lang::Result<Self> {
         Ok(Self::deserialize(buf)?)
       }
   }
 
   #[cfg(feature = "anchor")]
-  impl anchor_lang::AccountSerialize for TickArray {}
+  impl anchor_lang::AccountSerialize for SparseTickArray {}
 
   #[cfg(feature = "anchor")]
-  impl anchor_lang::Owner for TickArray {
+  impl anchor_lang::Owner for SparseTickArray {
       fn owner() -> Pubkey {
         crate::FUSIONAMM_ID
       }
   }
 
   #[cfg(feature = "anchor-idl-build")]
-  impl anchor_lang::IdlBuild for TickArray {}
+  impl anchor_lang::IdlBuild for SparseTickArray {}
 
   
   #[cfg(feature = "anchor-idl-build")]
-  impl anchor_lang::Discriminator for TickArray {
+  impl anchor_lang::Discriminator for SparseTickArray {
     const DISCRIMINATOR: &[u8] = &[0; 8];
   }
 

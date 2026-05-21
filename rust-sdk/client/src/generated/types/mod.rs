@@ -6,12 +6,18 @@
 //!
 
   pub(crate) mod r#accounts_type;
+  pub(crate) mod r#maybe_tick;
+  pub(crate) mod r#position_lock_type;
   pub(crate) mod r#remaining_accounts_info;
   pub(crate) mod r#remaining_accounts_slice;
   pub(crate) mod r#tick;
+  pub(crate) mod r#tick_data;
 
   pub use self::r#accounts_type::*;
+  pub use self::r#maybe_tick::*;
+  pub use self::r#position_lock_type::*;
   pub use self::r#remaining_accounts_info::*;
   pub use self::r#remaining_accounts_slice::*;
   pub use self::r#tick::*;
+  pub use self::r#tick_data::*;
 

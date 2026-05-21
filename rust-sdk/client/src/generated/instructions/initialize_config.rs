@@ -62,13 +62,13 @@ impl InitializeConfig {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
  pub struct InitializeConfigInstructionData {
             discriminator: [u8; 8],
-                                          }
+                              }
 
 impl InitializeConfigInstructionData {
   pub fn new() -> Self {
     Self {
                         discriminator: [208, 127, 21, 1, 194, 190, 196, 70],
-                                                                                                      }
+                                                                          }
   }
 }
 
@@ -85,8 +85,6 @@ impl Default for InitializeConfigInstructionData {
                 pub collect_protocol_fees_authority: Pubkey,
                 pub token_badge_authority: Pubkey,
                 pub default_protocol_fee_rate: u16,
-                pub default_order_protocol_fee_rate: u16,
-                pub default_clp_reward_rate: u16,
       }
 
 
@@ -106,8 +104,6 @@ pub struct InitializeConfigBuilder {
                 collect_protocol_fees_authority: Option<Pubkey>,
                 token_badge_authority: Option<Pubkey>,
                 default_protocol_fee_rate: Option<u16>,
-                default_order_protocol_fee_rate: Option<u16>,
-                default_clp_reward_rate: Option<u16>,
         __remaining_accounts: Vec<solana_instruction::AccountMeta>,
 }
 
@@ -151,16 +147,6 @@ impl InitializeConfigBuilder {
         self.default_protocol_fee_rate = Some(default_protocol_fee_rate);
         self
       }
-                #[inline(always)]
-      pub fn default_order_protocol_fee_rate(&mut self, default_order_protocol_fee_rate: u16) -> &mut Self {
-        self.default_order_protocol_fee_rate = Some(default_order_protocol_fee_rate);
-        self
-      }
-                #[inline(always)]
-      pub fn default_clp_reward_rate(&mut self, default_clp_reward_rate: u16) -> &mut Self {
-        self.default_clp_reward_rate = Some(default_clp_reward_rate);
-        self
-      }
         /// Add an additional account to the instruction.
   #[inline(always)]
   pub fn add_remaining_account(&mut self, account: solana_instruction::AccountMeta) -> &mut Self {
@@ -185,8 +171,6 @@ impl InitializeConfigBuilder {
                                                                   collect_protocol_fees_authority: self.collect_protocol_fees_authority.clone().expect("collect_protocol_fees_authority is not set"),
                                                                   token_badge_authority: self.token_badge_authority.clone().expect("token_badge_authority is not set"),
                                                                   default_protocol_fee_rate: self.default_protocol_fee_rate.clone().expect("default_protocol_fee_rate is not set"),
-                                                                  default_order_protocol_fee_rate: self.default_order_protocol_fee_rate.clone().expect("default_order_protocol_fee_rate is not set"),
-                                                                  default_clp_reward_rate: self.default_clp_reward_rate.clone().expect("default_clp_reward_rate is not set"),
                                     };
     
     accounts.instruction_with_remaining_accounts(args, &self.__remaining_accounts)
@@ -324,8 +308,6 @@ impl<'a, 'b> InitializeConfigCpiBuilder<'a, 'b> {
                                 collect_protocol_fees_authority: None,
                                 token_badge_authority: None,
                                 default_protocol_fee_rate: None,
-                                default_order_protocol_fee_rate: None,
-                                default_clp_reward_rate: None,
                     __remaining_accounts: Vec::new(),
     });
     Self { instruction }
@@ -365,16 +347,6 @@ impl<'a, 'b> InitializeConfigCpiBuilder<'a, 'b> {
         self.instruction.default_protocol_fee_rate = Some(default_protocol_fee_rate);
         self
       }
-                #[inline(always)]
-      pub fn default_order_protocol_fee_rate(&mut self, default_order_protocol_fee_rate: u16) -> &mut Self {
-        self.instruction.default_order_protocol_fee_rate = Some(default_order_protocol_fee_rate);
-        self
-      }
-                #[inline(always)]
-      pub fn default_clp_reward_rate(&mut self, default_clp_reward_rate: u16) -> &mut Self {
-        self.instruction.default_clp_reward_rate = Some(default_clp_reward_rate);
-        self
-      }
         /// Add an additional account to the instruction.
   #[inline(always)]
   pub fn add_remaining_account(&mut self, account: &'b solana_account_info::AccountInfo<'a>, is_writable: bool, is_signer: bool) -> &mut Self {
@@ -402,8 +374,6 @@ impl<'a, 'b> InitializeConfigCpiBuilder<'a, 'b> {
                                                                   collect_protocol_fees_authority: self.instruction.collect_protocol_fees_authority.clone().expect("collect_protocol_fees_authority is not set"),
                                                                   token_badge_authority: self.instruction.token_badge_authority.clone().expect("token_badge_authority is not set"),
                                                                   default_protocol_fee_rate: self.instruction.default_protocol_fee_rate.clone().expect("default_protocol_fee_rate is not set"),
-                                                                  default_order_protocol_fee_rate: self.instruction.default_order_protocol_fee_rate.clone().expect("default_order_protocol_fee_rate is not set"),
-                                                                  default_clp_reward_rate: self.instruction.default_clp_reward_rate.clone().expect("default_clp_reward_rate is not set"),
                                     };
         let instruction = InitializeConfigCpi {
         __program: self.instruction.__program,
@@ -429,8 +399,6 @@ struct InitializeConfigCpiBuilderInstruction<'a, 'b> {
                 collect_protocol_fees_authority: Option<Pubkey>,
                 token_badge_authority: Option<Pubkey>,
                 default_protocol_fee_rate: Option<u16>,
-                default_order_protocol_fee_rate: Option<u16>,
-                default_clp_reward_rate: Option<u16>,
         /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
   __remaining_accounts: Vec<(&'b solana_account_info::AccountInfo<'a>, bool, bool)>,
 }

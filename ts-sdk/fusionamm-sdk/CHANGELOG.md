@@ -1,5 +1,146 @@
 # @crypticdot/fusionamm
 
+## 1.1.1
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.1.1
+- @crypticdot/fusionamm-client@1.1.1
+
+## 1.1.0
+
+### Minor Changes
+
+- 09dc355: Sparse tick arrays
+
+### Patch Changes
+
+- Updated dependencies [09dc355]
+  - @crypticdot/fusionamm-client@1.1.0
+  - @crypticdot/fusionamm-core@1.1.0
+
+## 1.0.83
+
+### Patch Changes
+
+- 35f6c96: Update createFusionPoolInstructions function
+  - @crypticdot/fusionamm-core@1.0.83
+  - @crypticdot/fusionamm-client@1.0.83
+
+## 1.0.82
+
+### Patch Changes
+
+- 9a3dd78: Position locking
+- Updated dependencies [9a3dd78]
+  - @crypticdot/fusionamm-client@1.0.82
+  - @crypticdot/fusionamm-core@1.0.82
+
+## 1.0.81
+
+### Patch Changes
+
+- 6e215fc: Updated position and limit order open instructions
+  - @crypticdot/fusionamm-core@1.0.81
+  - @crypticdot/fusionamm-client@1.0.81
+
+## 1.0.80
+
+### Patch Changes
+
+- 1efc1d5: Linter setup
+- Updated dependencies [1efc1d5]
+  - @crypticdot/fusionamm-client@1.0.80
+  - @crypticdot/fusionamm-core@1.0.80
+
+## 1.0.79
+
+### Patch Changes
+
+- c0db198: openLimitOrderInstructions ephemeral signer fix
+  - @crypticdot/fusionamm-core@1.0.79
+  - @crypticdot/fusionamm-client@1.0.79
+
+## 1.0.78
+
+### Patch Changes
+
+- 67302d3: Added multisig ephemeral signer support for openLimitOrderInstructions function
+  - @crypticdot/fusionamm-core@1.0.78
+  - @crypticdot/fusionamm-client@1.0.78
+
+## 1.0.77
+
+### Patch Changes
+
+- d835100: Updated seed generation for create_account_with_seed
+  - @crypticdot/fusionamm-core@1.0.77
+  - @crypticdot/fusionamm-client@1.0.77
+
+## 1.0.76
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.0.76
+- @crypticdot/fusionamm-client@1.0.76
+
+## 1.0.75
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.0.75
+- @crypticdot/fusionamm-client@1.0.75
+
+## 1.0.74
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.0.74
+- @crypticdot/fusionamm-client@1.0.74
+
+## 1.0.73
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.0.73
+- @crypticdot/fusionamm-client@1.0.73
+
+## 1.0.72
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.0.72
+- @crypticdot/fusionamm-client@1.0.72
+
+## 1.0.71
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.0.71
+- @crypticdot/fusionamm-client@1.0.71
+
+## 1.0.70
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.0.70
+- @crypticdot/fusionamm-client@1.0.70
+
+## 1.0.69
+
+### Patch Changes
+
+- Updated dependencies [010c0ff]
+  - @crypticdot/fusionamm-core@1.0.69
+  - @crypticdot/fusionamm-client@1.0.69
+
+## 1.0.68
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.0.68
+- @crypticdot/fusionamm-client@1.0.68
+
 ## 1.0.62
 
 ### Patch Changes

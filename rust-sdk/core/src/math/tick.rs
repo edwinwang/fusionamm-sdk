@@ -8,16 +8,14 @@
 // See the LICENSE file in the project root for license information.
 //
 
+use crate::{CoreError, TickRange, FULL_RANGE_ONLY_TICK_SPACING_THRESHOLD, MAX_TICK_INDEX, MIN_TICK_INDEX, TICK_ARRAY_SIZE, TICK_INDEX_NOT_IN_ARRAY};
 use ethnum::U256;
 
 #[cfg(feature = "wasm")]
 use fusionamm_macros::wasm_expose;
 
-use crate::{
-    CoreError, TickRange, FULL_RANGE_ONLY_TICK_SPACING_THRESHOLD, MAX_TICK_INDEX, MIN_TICK_INDEX, TICK_ARRAY_SIZE, TICK_INDEX_NOT_IN_ARRAY, U128,
-};
-
 const LOG_B_2_X32: i128 = 59543866431248i128;
+
 const BIT_PRECISION: u32 = 14;
 const LOG_B_P_ERR_MARGIN_LOWER_X64: i128 = 184467440737095516i128; // 0.01
 const LOG_B_P_ERR_MARGIN_UPPER_X64: i128 = 15793534762490258745i128; // 2^-precision / log_2_b + 0.01
@@ -47,11 +45,11 @@ pub fn get_tick_array_start_tick_index(tick_index: i32, tick_spacing: u16) -> i3
 /// # Returns
 /// - `Ok`: A u128 Q32.64 representing the sqrt_price
 #[cfg_attr(feature = "wasm", wasm_expose)]
-pub fn tick_index_to_sqrt_price(tick_index: i32) -> U128 {
+pub fn tick_index_to_sqrt_price(tick_index: i32) -> u128 {
     if tick_index >= 0 {
-        get_sqrt_price_positive_tick(tick_index).into()
+        get_sqrt_price_positive_tick(tick_index)
     } else {
-        get_sqrt_price_negative_tick(tick_index).into()
+        get_sqrt_price_negative_tick(tick_index)
     }
 }
 
@@ -64,10 +62,9 @@ pub fn tick_index_to_sqrt_price(tick_index: i32) -> U128 {
 /// # Returns
 /// - `Ok`: A i32 integer representing the tick integer
 #[cfg_attr(feature = "wasm", wasm_expose)]
-pub fn sqrt_price_to_tick_index(sqrt_price: U128) -> i32 {
-    let sqrt_price_x64: u128 = sqrt_price.into();
+pub fn sqrt_price_to_tick_index(sqrt_price: u128) -> i32 {
     // Determine log_b(sqrt_ratio). First by calculating integer portion (msb)
-    let msb: u32 = 128 - sqrt_price_x64.leading_zeros() - 1;
+    let msb: u32 = 128 - sqrt_price.leading_zeros() - 1;
     let log2p_integer_x32 = (msb as i128 - 64) << 32;
 
     // get fractional value (r/2^msb), msb always > 128
@@ -79,11 +76,7 @@ pub fn sqrt_price_to_tick_index(sqrt_price: U128) -> i32 {
     // Log2 iterative approximation for the fractional part
     // Go through each 2^(j) bit where j < 64 in a Q64.64 number
     // Append current bit value to fraction result if r^2 Q2.126 is more than 2
-    let mut r = if msb >= 64 {
-        sqrt_price_x64 >> (msb - 63)
-    } else {
-        sqrt_price_x64 << (63 - msb)
-    };
+    let mut r = if msb >= 64 { sqrt_price >> (msb - 63) } else { sqrt_price << (63 - msb) };
 
     while bit > 0 && precision < BIT_PRECISION {
         r *= r;
@@ -111,8 +104,8 @@ pub fn sqrt_price_to_tick_index(sqrt_price: U128) -> i32 {
         // then the actual tick_high has to be higher than than tick_high.
         // Otherwise, the actual value is between tick_low & tick_high, so a floor value
         // (tick_low) is returned
-        let actual_tick_high_sqrt_price_x64: u128 = tick_index_to_sqrt_price(tick_high).into();
-        if actual_tick_high_sqrt_price_x64 <= sqrt_price_x64 {
+        let actual_tick_high_sqrt_price_x64 = tick_index_to_sqrt_price(tick_high);
+        if actual_tick_high_sqrt_price_x64 <= sqrt_price {
             tick_high
         } else {
             tick_low
@@ -235,7 +228,7 @@ pub fn invert_tick_index(tick_index: i32) -> i32 {
 /// # Returns
 /// - A u128 integer representing the sqrt price for the inverse of the price
 #[cfg_attr(feature = "wasm", wasm_expose)]
-pub fn invert_sqrt_price(sqrt_price: U128) -> U128 {
+pub fn invert_sqrt_price(sqrt_price: u128) -> u128 {
     let tick_index = sqrt_price_to_tick_index(sqrt_price);
     let inverted_tick_index = invert_tick_index(tick_index);
     tick_index_to_sqrt_price(inverted_tick_index)
@@ -318,7 +311,6 @@ pub fn get_tick_index_in_array(tick_index: i32, tick_array_start_index: i32, tic
 }
 
 // Private functions
-
 fn mul_shift_96(n0: u128, n1: u128) -> u128 {
     let mul: U256 = (<U256>::from(n0) * <U256>::from(n1)) >> 96;
     mul.as_u128()

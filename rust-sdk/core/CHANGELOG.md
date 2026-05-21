@@ -1,5 +1,79 @@
 # @crypticdot/fusionamm-rust-core
 
+## 1.1.1
+
+## 1.1.0
+
+## 1.0.83
+
+## 1.0.82
+
+## 1.0.81
+
+## 1.0.80
+
+## 1.0.79
+
+## 1.0.78
+
+## 1.0.77
+
+## 1.0.76
+
+### Patch Changes
+
+- 5ab3f58: Updated liquidity math
+
+## 1.0.75
+
+### Patch Changes
+
+- 3c257ee: Code cleanup
+
+## 1.0.74
+
+### Patch Changes
+
+- ad1d56f: Removed U128
+
+## 1.0.73
+
+### Patch Changes
+
+- 5d852b8: Made Q64_RESOLUTION public
+
+## 1.0.72
+
+### Patch Changes
+
+- 9bb3e0f: Improved order book performance
+
+## 1.0.71
+
+### Patch Changes
+
+- a869feb: Improved order book performance
+
+## 1.0.70
+
+### Patch Changes
+
+- fe6a773: Optimized order book calculation
+
+## 1.0.69
+
+### Patch Changes
+
+- 010c0ff: Optimized tick_index_to_sqrt_price
+
+## 1.0.68
+
+### Patch Changes
+
+- ef0888b: Got rid of TickArraySequence and renamed the optimized TickArraySequenceVec to TickArraySequence
+
+## 1.0.67
+
 ## 1.0.66
 
 ### Patch Changes
