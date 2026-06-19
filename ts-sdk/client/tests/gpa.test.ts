@@ -24,9 +24,12 @@ import {
   TokenBadgeArgs,
   LimitOrderArgs,
   MaybeTickArgs,
+<<<<<<< HEAD
   SparseTickArrayArgs,
   getSparseTickArrayEncoder,
   TickArgs,
+=======
+>>>>>>> upstream/main
   TickArrayArgs,
   getTickArrayEncoder,
 } from "../src";
@@ -56,6 +59,9 @@ import {
   getLimitOrderEncoder,
   limitOrderFusionPoolFilter,
   limitOrderMintFilter,
+  fetchAllTickArrayWithFilter,
+  tickArrayFusionPoolFilter,
+  tickArrayStartTickIndexFilter,
 } from "../src";
 import {
   fetchAllSparseTickArrayWithFilter,
@@ -148,18 +154,22 @@ describe("get program account memcmp filters", () => {
   });
 
   it("TickArray", async () => {
-    const tickStruct: TickArgs = {
-      initialized: true,
-      liquidityNet: 1234,
-      liquidityGross: 5678,
-      feeGrowthOutsideA: 9012,
-      feeGrowthOutsideB: 3456,
-      age: 777,
-      openOrdersInput: 3242,
-      partFilledOrdersInput: 6432354,
-      partFilledOrdersRemainingInput: 783434,
-      fulfilledAToBOrdersInput: 23463,
-      fulfilledBToAOrdersInput: 14633,
+    const tickStruct: MaybeTickArgs = {
+      __kind: "Initialized",
+      fields: [
+        {
+          liquidityNet: 1,
+          liquidityGross: 2,
+          feeGrowthOutsideA: 3,
+          feeGrowthOutsideB: 4,
+          age: 5,
+          openOrdersInput: 6,
+          partFilledOrdersInput: 7,
+          partFilledOrdersRemainingInput: 8,
+          fulfilledAToBOrdersInput: 9,
+          fulfilledBToAOrdersInput: 10,
+        },
+      ],
     };
     const tickArrayStruct: TickArrayArgs = {
       startTickIndex: 1234,
@@ -185,6 +195,7 @@ describe("get program account memcmp filters", () => {
     assertFilters(data);
   });
 
+<<<<<<< HEAD
   it("SparseTickArray", async () => {
     const tickStruct: MaybeTickArgs = {
       __kind: "Initialized",
@@ -217,6 +228,8 @@ describe("get program account memcmp filters", () => {
     assertFilters(data);
   });
 
+=======
+>>>>>>> upstream/main
 
   it("TokenBadge", async () => {
     const tokenBadgeStruct: TokenBadgeArgs = {

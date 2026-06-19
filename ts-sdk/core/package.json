@@ -1,7 +1,11 @@
 {
   "name": "@crypticdot/fusionamm-core",
   "description": "FusionAMM core typescript package.",
+<<<<<<< HEAD
   "version": "1.1.1",
+=======
+  "version": "1.1.5",
+>>>>>>> upstream/main
   "type": "module",
   "main": "./dist/nodejs/fusionamm_core_js_bindings.js",
   "types": "./dist/nodejs/fusionamm_core_js_bindings.d.ts",

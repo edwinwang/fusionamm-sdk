@@ -16,6 +16,7 @@ import {
   getPositionAddress,
   getTickArrayAddress,
   getUpdateFeesInstruction,
+  maybeTickToFacade,
 } from "@crypticdot/fusionamm-client";
 import type { CollectFeesQuote } from "@crypticdot/fusionamm-core";
 import { collectFeesQuote, getTickArrayStartTickIndex, getTickIndexInArray } from "@crypticdot/fusionamm-core";
@@ -135,8 +136,8 @@ export async function harvestPositionInstructions(
   const feesQuote = collectFeesQuote(
     fusionPool.data,
     position.data,
-    lowerTick,
-    upperTick,
+    maybeTickToFacade(lowerTick),
+    maybeTickToFacade(upperTick),
     getCurrentTransferFee(mintA, currentEpoch.epoch),
     getCurrentTransferFee(mintB, currentEpoch.epoch),
   );

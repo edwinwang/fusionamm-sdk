@@ -8,7 +8,17 @@
 // See the LICENSE file in the project root for license information.
 //
 
+<<<<<<< HEAD
 import type { FusionPool } from "@crypticdot/fusionamm-client";
+=======
+import {
+  FusionPool,
+  getTickArrayMinSize,
+  TICK_ARRAY_DISCRIMINATOR,
+  TickArray,
+  tickArrayToFacade,
+} from "@crypticdot/fusionamm-client";
+>>>>>>> upstream/main
 import {
   AccountsType,
   fetchAllMaybeTickArray,
@@ -93,26 +103,19 @@ function createUninitializedTickArray(
   address: Address,
   startTickIndex: number,
   programAddress: Address,
-): Account<TickArrayFacade> {
+  fusionPool: Address,
+): Account<TickArray> {
   return {
     address,
     data: {
+      discriminator: TICK_ARRAY_DISCRIMINATOR,
       startTickIndex,
+      fusionPool,
       ticks: Array(_TICK_ARRAY_SIZE()).fill({
-        initialized: false,
-        liquidityNet: 0n,
-        liquidityGross: 0n,
-        feeGrowthOutsideA: 0n,
-        feeGrowthOutsideB: 0n,
-        age: 0n,
-        openOrdersInput: 0n,
-        partFilledOrdersInput: 0n,
-        partFilledOrdersRemainingInput: 0n,
-        fulfilledAToBOrdersInput: 0n,
-        fulfilledBToAOrdersInput: 0n,
+        __kind: "Uninitialized",
       }),
     },
-    space: 0n,
+    space: BigInt(getTickArrayMinSize()),
     executable: false,
     lamports: lamports(0n),
     programAddress,
@@ -123,7 +126,7 @@ export async function fetchTickArrayOrDefault(
   rpc: Rpc<GetMultipleAccountsApi>,
   fusionPool: Account<FusionPool>,
   config?: FetchAccountsConfig,
-): Promise<Account<TickArrayFacade>[]> {
+): Promise<Account<TickArray>[]> {
   const tickArrayStartIndex = getTickArrayStartTickIndex(fusionPool.data.tickCurrentIndex, fusionPool.data.tickSpacing);
   const offset = fusionPool.data.tickSpacing * _TICK_ARRAY_SIZE();
 
@@ -141,7 +144,7 @@ export async function fetchTickArrayOrDefault(
 
   const maybeTickArrays = await fetchAllMaybeTickArray(rpc, tickArrayAddresses, config);
 
-  const tickArrays: Account<TickArrayFacade>[] = [];
+  const tickArrays: Account<TickArray>[] = [];
 
   for (let i = 0; i < maybeTickArrays.length; i++) {
     const maybeTickArray = maybeTickArrays[i];
@@ -149,7 +152,12 @@ export async function fetchTickArrayOrDefault(
       tickArrays.push(maybeTickArray);
     } else {
       tickArrays.push(
-        createUninitializedTickArray(tickArrayAddresses[i], tickArrayIndexes[i], fusionPool.programAddress),
+        createUninitializedTickArray(
+          tickArrayAddresses[i],
+          tickArrayIndexes[i],
+          fusionPool.programAddress,
+          fusionPool.address,
+        ),
       );
     }
   }
@@ -247,7 +255,7 @@ export async function swapInstructions<T extends SwapParams>(
     fusionPool.data,
     transferFeeA,
     transferFeeB,
-    tickArrays.map(x => x.data),
+    tickArrays.map(x => tickArrayToFacade(x.data)),
     specifiedTokenA,
     slippageToleranceBps,
   );

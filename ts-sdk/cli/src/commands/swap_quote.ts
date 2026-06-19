@@ -1,4 +1,4 @@
-import { fetchMaybeFusionPool } from "@crypticdot/fusionamm-client";
+import { fetchMaybeFusionPool, tickArrayToFacade } from "@crypticdot/fusionamm-client";
 import {
   ExactInSwapQuote,
   ExactOutSwapQuote,
@@ -76,7 +76,7 @@ export default class SwapQuote extends BaseCommand {
       aToB,
       SLIPPAGE_TOLERANCE_BPS,
       fusionPool.data,
-      tickArrays.map(x => x.data),
+      tickArrays.map(x => tickArrayToFacade(x.data)),
     ] as const;
 
     const swapQuote = flags.amountIn

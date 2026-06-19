@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Account,
   Address,
@@ -51,6 +52,28 @@ export type TickArrayArgs = {
 
 const FIXED_TICK_ARRAY_DISCRIMINATOR_NUMBER = getU64Decoder().decode(FIXED_TICK_ARRAY_DISCRIMINATOR);
 const SPARSE_TICK_ARRAY_DISCRIMINATOR_NUMBER = getU64Decoder().decode(SPARSE_TICK_ARRAY_DISCRIMINATOR);
+=======
+import { MaybeTick, TickArray } from "../generated";
+
+export interface TickFacade {
+  initialized: boolean;
+  liquidityNet: bigint;
+  liquidityGross: bigint;
+  feeGrowthOutsideA: bigint;
+  feeGrowthOutsideB: bigint;
+  age: bigint;
+  openOrdersInput: bigint;
+  partFilledOrdersInput: bigint;
+  partFilledOrdersRemainingInput: bigint;
+  fulfilledAToBOrdersInput: bigint;
+  fulfilledBToAOrdersInput: bigint;
+}
+
+export interface TickArrayFacade {
+  startTickIndex: number;
+  ticks: TickFacade[];
+}
+>>>>>>> upstream/main
 
 export function getTickArrayMinSize(): number {
   return 132; // 8+4+32+88
@@ -60,10 +83,14 @@ export function getTickArrayMaxSize(): number {
   return 9988; // 8+4+32+88*113
 }
 
+<<<<<<< HEAD
 export function consolidateTick(tick: Tick | MaybeTick): Tick {
   if ("initialized" in tick) {
     return tick;
   }
+=======
+export function maybeTickToFacade(tick: MaybeTick): TickFacade {
+>>>>>>> upstream/main
   switch (tick.__kind) {
     case "Uninitialized":
       return {
@@ -96,6 +123,7 @@ export function consolidateTick(tick: Tick | MaybeTick): Tick {
   }
 }
 
+<<<<<<< HEAD
 export function getTickArrayEncoder(): Encoder<TickArrayArgs> {
   return transformEncoder(
     getStructEncoder([
@@ -221,3 +249,11 @@ export async function fetchAllMaybeTickArray(
   const maybeAccounts = await fetchEncodedAccounts(rpc, addresses, config);
   return maybeAccounts.map(maybeAccount => decodeTickArray(maybeAccount));
 }
+=======
+export function tickArrayToFacade(tickArray: TickArray): TickArrayFacade {
+  return {
+    startTickIndex: tickArray.startTickIndex,
+    ticks: tickArray.ticks.map(maybeTick => maybeTickToFacade(maybeTick)),
+  };
+}
+>>>>>>> upstream/main

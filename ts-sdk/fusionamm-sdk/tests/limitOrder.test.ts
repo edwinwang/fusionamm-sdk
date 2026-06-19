@@ -16,6 +16,10 @@ import {
   getLimitOrderAddress,
   getTickArrayAddress,
   LimitOrder,
+<<<<<<< HEAD
+=======
+  maybeTickToFacade,
+>>>>>>> upstream/main
 } from "@crypticdot/fusionamm-client";
 import {
   decreaseLimitOrderQuote,
@@ -119,9 +123,14 @@ describe("Limit Orders", () => {
 
     const tickArray = await fetchMaybeTickArray(rpc, tickArrayAddress);
     const tickBefore = tickArray.exists
+<<<<<<< HEAD
       ? tickArray.data.ticks[(initializableTickIndex - tickArrayStartIndex) / pool.data.tickSpacing]
       : undefined;
 
+=======
+      ? maybeTickToFacade(tickArray.data.ticks[(initializableTickIndex - tickArrayStartIndex) / pool.data.tickSpacing])
+      : undefined;
+>>>>>>> upstream/main
     const { instructions, amountWithFee } = await openLimitOrderInstructions(
       rpc,
       limitOrderMint,
@@ -139,7 +148,13 @@ describe("Limit Orders", () => {
     const limitOrder = await fetchLimitOrder(rpc, limitOrderAddress);
 
     const tickArrayAfter = await fetchTickArray(rpc, tickArrayAddress);
+<<<<<<< HEAD
     const tickAfter = tickArrayAfter.data.ticks[(initializableTickIndex - tickArrayStartIndex) / pool.data.tickSpacing];
+=======
+    const tickAfter = maybeTickToFacade(
+      tickArrayAfter.data.ticks[(initializableTickIndex - tickArrayStartIndex) / pool.data.tickSpacing],
+    );
+>>>>>>> upstream/main
     expect(tickAfter.openOrdersInput).toEqual((tickBefore ? tickBefore.openOrdersInput : 0n) + amount);
 
     if (ataAAddress && ataBAddress) {
@@ -174,13 +189,21 @@ describe("Limit Orders", () => {
 
     const tickArray = await fetchTickArray(rpc, tickArrayAddress);
     const tickNumber = (tickIndex - tickArrayStartIndex) / pool.data.tickSpacing;
+<<<<<<< HEAD
     const tickBefore = tickArray.data.ticks[tickNumber];
+=======
+    const tickBefore = maybeTickToFacade(tickArray.data.ticks[tickNumber]);
+>>>>>>> upstream/main
 
     const { instructions } = await closeLimitOrderInstructions(rpc, limitOrderMint);
     await sendTransaction(instructions);
 
     const tickArrayAfter = await fetchTickArray(rpc, tickArrayAddress);
+<<<<<<< HEAD
     const tickAfter = tickArrayAfter.data.ticks[tickNumber];
+=======
+    const tickAfter = maybeTickToFacade(tickArrayAfter.data.ticks[tickNumber]);
+>>>>>>> upstream/main
 
     if (limitOrder.data.age == tickBefore.age) {
       expect(tickAfter.openOrdersInput).toEqual(tickBefore.openOrdersInput - amount);
@@ -486,7 +509,13 @@ describe("Limit Orders", () => {
     const tickArray = await fetchTickArray(rpc, tickArrayAddress[0]);
 
     // Decrease Limit Order Quote
+<<<<<<< HEAD
     const tick = tickArray.data.ticks[(limitOrder.tickIndex - startTickIndex) / fusionPool.data.tickSpacing];
+=======
+    const tick = maybeTickToFacade(
+      tickArray.data.ticks[(limitOrder.tickIndex - startTickIndex) / fusionPool.data.tickSpacing],
+    );
+>>>>>>> upstream/main
     expect(tick.age).toEqual(2n);
     expect(tick.openOrdersInput).toEqual(0n);
     expect(tick.partFilledOrdersInput).toEqual(0n);

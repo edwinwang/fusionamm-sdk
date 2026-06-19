@@ -3,10 +3,18 @@ import {
   fetchFusionPool,
   fetchMaybeLimitOrder,
   fetchTickArray,
+<<<<<<< HEAD
   FixedTickArray,
   FusionPool,
   getTickArrayAddress,
   LimitOrder,
+=======
+  FusionPool,
+  getTickArrayAddress,
+  LimitOrder,
+  maybeTickToFacade,
+  TickArray,
+>>>>>>> upstream/main
 } from "@crypticdot/fusionamm-client";
 import {
   decreaseLimitOrderQuote,
@@ -77,7 +85,12 @@ export default class FetchLimitOrder extends BaseCommand {
     );
     const tick = tickArray.data.ticks[tickIndexInArray];
 
-    const quote = decreaseLimitOrderQuote(fusionPool.data, limitOrder.data, tick, limitOrder.data.amount);
+    const quote = decreaseLimitOrderQuote(
+      fusionPool.data,
+      limitOrder.data,
+      maybeTickToFacade(tick),
+      limitOrder.data.amount,
+    );
     const fill =
       (limitOrder.data.aToB
         ? Number(limitOrder.data.amount - quote.amountOutA)

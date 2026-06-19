@@ -1,6 +1,15 @@
 import type { Account, Address, GetProgramAccountsApi, Rpc } from "@solana/kit";
 
+<<<<<<< HEAD
 import { consolidateTickArray, TickArray } from "../state";
+=======
+import type { Account, Address, GetProgramAccountsApi, GetProgramAccountsMemcmpFilter, Rpc } from "@solana/kit";
+import { getAddressEncoder, getBase58Decoder, getI32Encoder } from "@solana/kit";
+
+import { FUSIONAMM_PROGRAM_ADDRESS, getTickArrayDecoder, TICK_ARRAY_DISCRIMINATOR, TickArray } from "../generated";
+
+import { fetchDecodedProgramAccounts } from "./utils";
+>>>>>>> upstream/main
 
 import type { FixedTickArrayFilter } from "./fixedTickArray";
 import {
@@ -30,8 +39,16 @@ export function tickArrayStartTickIndexFilter(startTickIndex: number): TickArray
 
 export function tickArrayFusionPoolFilter(address: Address): TickArrayFilter {
   return {
+<<<<<<< HEAD
     fixed: fixedTickArrayFusionPoolFilter(address),
     sparse: sparseTickArrayFusionPoolFilter(address),
+=======
+    memcmp: {
+      offset: 12n,
+      bytes: getBase58Decoder().decode(getAddressEncoder().encode(address)),
+      encoding: "base58",
+    },
+>>>>>>> upstream/main
   } as TickArrayFilter;
 }
 

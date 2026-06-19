@@ -18,7 +18,7 @@ default = []
 solana-v1 = ["fusionamm-client/solana-v1"]
 
 [dependencies]
-fusionamm-core = { path = "../core" }
+fusionamm-core = { path = "../core", features = ["serde"] }
 fusionamm-client = { path = "../client", features = ["fetch", "serde"] }
 
 # Solana
@@ -47,6 +47,8 @@ serde_json = { version = "^1.0" }
 log = "0.4.27"
 
 [dev-dependencies]
+serde_with = { version = "^3.10" }
+serde-big-array = { version = "^0.5" }
 serial_test = { version = "^3.1" }
 solana-program-test = { version = "2.1.0" }
 solana-version = { version = "2.1.0" }

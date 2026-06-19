@@ -1,5 +1,38 @@
 # @crypticdot/fusionamm
 
+<<<<<<< HEAD
+=======
+## 1.1.5
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.1.5
+- @crypticdot/fusionamm-client@1.1.5
+
+## 1.1.4
+
+### Patch Changes
+
+- 4423944: Removed obsolete tick array account
+- Updated dependencies [4423944]
+  - @crypticdot/fusionamm-client@1.1.4
+  - @crypticdot/fusionamm-core@1.1.4
+
+## 1.1.3
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.1.3
+- @crypticdot/fusionamm-client@1.1.3
+
+## 1.1.2
+
+### Patch Changes
+
+- @crypticdot/fusionamm-core@1.1.2
+- @crypticdot/fusionamm-client@1.1.2
+
+>>>>>>> upstream/main
 ## 1.1.1
 
 ### Patch Changes

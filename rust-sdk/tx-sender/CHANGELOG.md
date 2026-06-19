@@ -1,5 +1,17 @@
 # @crypticdot/fusionamm-rust-tx-sender
 
+## 1.0.25
+
+### Patch Changes
+
+- 6e66ef7: Added dry_run option
+
+## 1.0.24
+
+### Patch Changes
+
+- 1463ab1: Fixed typo
+
 ## 1.0.23
 
 ### Patch Changes

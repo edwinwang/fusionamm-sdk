@@ -8,9 +8,14 @@
 // See the LICENSE file in the project root for license information.
 //
 
+<<<<<<< HEAD
 import type { FusionPool } from "@crypticdot/fusionamm-client";
 import {
   fetchAllTickArray,
+=======
+import { fetchAllTickArray, FusionPool, maybeTickToFacade } from "@crypticdot/fusionamm-client";
+import {
+>>>>>>> upstream/main
   fetchFusionPool,
   fetchPosition,
   getClosePositionInstruction,
@@ -345,7 +350,14 @@ export async function closePositionInstructions(
       getTickIndexInArray(position.data.tickUpperIndex, upperTickArrayStartIndex, fusionPool.data.tickSpacing)
     ];
 
-  const feesQuote = collectFeesQuote(fusionPool.data, position.data, lowerTick, upperTick, transferFeeA, transferFeeB);
+  const feesQuote = collectFeesQuote(
+    fusionPool.data,
+    position.data,
+    maybeTickToFacade(lowerTick),
+    maybeTickToFacade(upperTick),
+    transferFeeA,
+    transferFeeB,
+  );
 
   const requiredMints: Set<Address> = new Set();
   if (quote.liquidityDelta > 0n || feesQuote.feeOwedA > 0n || feesQuote.feeOwedB > 0n) {

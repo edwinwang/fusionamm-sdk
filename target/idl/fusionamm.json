@@ -2,7 +2,7 @@
   "address": "fUSioN9YKKSa3CUC2YUc4tPkHJ5Y6XW1yz8y6F7qWz9",
   "metadata": {
     "name": "fusionamm",
-    "version": "1.1.0",
+    "version": "1.1.4",
     "spec": "0.1.0"
   },
   "instructions": [
@@ -309,31 +309,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "convert_tick_array",
-      "discriminator": [
-        55,
-        55,
-        131,
-        114,
-        177,
-        25,
-        199,
-        142
-      ],
-      "accounts": [
-        {
-          "name": "funder",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "tick_array",
-          "writable": true
-        }
-      ],
-      "args": []
     },
     {
       "name": "decrease_limit_order",
@@ -874,42 +849,6 @@
       ]
     },
     {
-      "name": "initialize_fixed_tick_array",
-      "discriminator": [
-        73,
-        14,
-        85,
-        59,
-        113,
-        83,
-        209,
-        107
-      ],
-      "accounts": [
-        {
-          "name": "fusion_pool"
-        },
-        {
-          "name": "funder",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "tick_array",
-          "writable": true
-        },
-        {
-          "name": "system_program"
-        }
-      ],
-      "args": [
-        {
-          "name": "start_tick_index",
-          "type": "i32"
-        }
-      ]
-    },
-    {
       "name": "initialize_pool",
       "docs": [
         "Initializes a FusionPool account.",
@@ -1116,42 +1055,6 @@
         }
       ],
       "args": []
-    },
-    {
-      "name": "initialize_sparse_tick_array",
-      "discriminator": [
-        53,
-        5,
-        112,
-        210,
-        93,
-        239,
-        122,
-        150
-      ],
-      "accounts": [
-        {
-          "name": "fusion_pool"
-        },
-        {
-          "name": "funder",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "tick_array",
-          "writable": true
-        },
-        {
-          "name": "system_program"
-        }
-      ],
-      "args": [
-        {
-          "name": "start_tick_index",
-          "type": "i32"
-        }
-      ]
     },
     {
       "name": "initialize_tick_array",
@@ -2193,19 +2096,6 @@
   ],
   "accounts": [
     {
-      "name": "FixedTickArray",
-      "discriminator": [
-        69,
-        97,
-        189,
-        190,
-        110,
-        7,
-        66,
-        187
-      ]
-    },
-    {
       "name": "FusionPool",
       "discriminator": [
         254,
@@ -2284,7 +2174,7 @@
       ]
     },
     {
-      "name": "SparseTickArray",
+      "name": "TickArray",
       "discriminator": [
         85,
         1,
@@ -2676,44 +2566,6 @@
           },
           {
             "name": "SupplementalTickArraysTwo"
-          }
-        ]
-      }
-    },
-    {
-      "name": "FixedTickArray",
-      "docs": [
-        "FixedTickArray: A fixed-length tick array",
-        "The discriminator is kept unchanged from the original \"TickArray\" account definition."
-      ],
-      "serialization": "bytemuckunsafe",
-      "repr": {
-        "kind": "c",
-        "packed": true
-      },
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "start_tick_index",
-            "type": "i32"
-          },
-          {
-            "name": "ticks",
-            "type": {
-              "array": [
-                {
-                  "defined": {
-                    "name": "Tick"
-                  }
-                },
-                88
-              ]
-            }
-          },
-          {
-            "name": "fusion_pool",
-            "type": "pubkey"
           }
         ]
       }
@@ -3132,7 +2984,7 @@
       }
     },
     {
-      "name": "SparseTickArray",
+      "name": "TickArray",
       "type": {
         "kind": "struct",
         "fields": [
@@ -3156,63 +3008,6 @@
                 88
               ]
             }
-          }
-        ]
-      }
-    },
-    {
-      "name": "Tick",
-      "serialization": "bytemuckunsafe",
-      "repr": {
-        "kind": "c",
-        "packed": true
-      },
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "initialized",
-            "type": "bool"
-          },
-          {
-            "name": "liquidity_net",
-            "type": "i128"
-          },
-          {
-            "name": "liquidity_gross",
-            "type": "u128"
-          },
-          {
-            "name": "fee_growth_outside_a",
-            "type": "u128"
-          },
-          {
-            "name": "fee_growth_outside_b",
-            "type": "u128"
-          },
-          {
-            "name": "age",
-            "type": "u64"
-          },
-          {
-            "name": "open_orders_input",
-            "type": "u64"
-          },
-          {
-            "name": "part_filled_orders_input",
-            "type": "u64"
-          },
-          {
-            "name": "part_filled_orders_remaining_input",
-            "type": "u64"
-          },
-          {
-            "name": "fulfilled_a_to_b_orders_input",
-            "type": "u64"
-          },
-          {
-            "name": "fulfilled_b_to_a_orders_input",
-            "type": "u64"
           }
         ]
       }

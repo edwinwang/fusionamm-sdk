@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 import { fetchMaybeFusionPool, fetchMaybeTickArray, getTickArrayAddress } from "@crypticdot/fusionamm-client";
+=======
+import {
+  fetchMaybeFusionPool,
+  fetchMaybeTickArray,
+  getTickArrayAddress,
+  maybeTickToFacade,
+} from "@crypticdot/fusionamm-client";
+>>>>>>> upstream/main
 import { _TICK_ARRAY_SIZE, getTickArrayStartTickIndex, getTickIndexInArray } from "@crypticdot/fusionamm-core";
 import { Flags } from "@oclif/core";
 
@@ -70,7 +79,7 @@ export default class FetchTickArray extends BaseCommand {
 
         const i = getTickIndexInArray(flags.tickIndex, startTickIndex, fusionPool.data.tickSpacing);
         console.log(`Tick ${flags.tickIndex}, index in array ${i}:`);
-        console.log(tickArray.data.ticks[i]);
+        console.log(maybeTickToFacade(tickArray.data.ticks[i]));
       } else {
         console.log("TickArray doesn't exist");
       }

@@ -1525,6 +1525,7 @@ dependencies = [
  "fusionamm-macros",
  "libm",
  "once_cell",
+ "serde",
 ]
 
 [[package]]
@@ -1550,7 +1551,9 @@ dependencies = [
  "log",
  "rstest",
  "serde",
+ "serde-big-array",
  "serde_json",
+ "serde_with",
  "serial_test",
  "solana-account",
  "solana-account-decoder",
